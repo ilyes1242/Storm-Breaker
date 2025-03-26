@@ -12,15 +12,6 @@ GRN='\033[0;32m'
 PUL='\033[0;35m'
 RST='\033[0m'
 
-checkroot() {
-    SAVE_LD_PRELOAD="$LD_PRELOAD"
-    unset LD_PRELOAD
-    if [ "$(id -u)" -ne 0 ]; then
-        printf "${RED}Please, run as root!\n${RST}"
-        exit 1
-    fi
-    LD_PRELOAD="$SAVE_LD_PRELOAD"
-}
 termux_based() {
     apt-get update
     pkg install python php # use pkg install
@@ -63,7 +54,7 @@ if [ $TERMUX -gt 0 ];then
     echo "Working on android : Termux"
     termux_based
 else 
-    checkroot
+   
     if [ "$KERNEL" = "linux" ]; then
         DISTRO="$(grep ^ID= /etc/os-release | cut -d= -f2 | tr '[:upper:]' '[:lower:]' | sed 's/\"//g')"
 
